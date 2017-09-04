@@ -1,4 +1,4 @@
-class Adimg {
+class BannerImg {
   constructor(root, mode) {
     /**
      * @param root: TYPE Object. The root div of a Ad Banner Pic, concluding all components of it.
@@ -37,4 +37,4 @@ class Adimg {
   }
 }
 
-export default Adimg;
+export default BannerImg;

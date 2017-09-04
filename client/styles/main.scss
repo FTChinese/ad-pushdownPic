@@ -10,7 +10,7 @@ html,body {
   overflow-y:hidden;
 }
 
-.mode-img {
+.mode-banner {
   height:90px;
   display:block;
 
@@ -40,25 +40,11 @@ html,body {
 }
 
 
-.mode-video {
+.mode-big {
   height:90px;
   display:none;
-  
- 
 
-  .video {
-    width:100%;
-    height:100%;
-    overflow-y:hidden;
-   
-    video {
-      display: block;
-      width:969px;
-      height:400px;
-    }
-  }
-
-  .post-pic {
+  .big-pic {
       position:absolute;
       top:0px;
       left:0px;
@@ -66,9 +52,8 @@ html,body {
       height:100%;
       overflow-y:hidden;
       img{
-        display: none;
         width:969px;
-        height:400px;
+        height:540px;
       }
       
   }
@@ -82,18 +67,7 @@ html,body {
     z-index:10;
     display:block;
   }
-  .pause-play-btn {
-    position:absolute;
-    width:25px;
-    height:25px;
-    top:342px;
-    left:15px;
-    z-index:20;
-    img {
-      width:100%;
-      height:100%;
-    }
-  }
+
 
   .close-btn {
     position:absolute;
@@ -111,21 +85,7 @@ html,body {
 .hide{
   display:none;
 }
-/*
-.close {
-  -webkit-animation:shrinkToClose 2s ease;
-  -moz-animation: shrinkToClose 2s ease;
-  -o-animation: shrinkToClose 2s ease;
-  animation:shrinkToClose 2s ease;
-}
 
-.open {
-  -webkit-animation:pushdownToOpen 2s ease;
-  -moz-animation: pushdownToOpen 2s ease;
-  -o-animation: pushdownToOpen 2s ease;
-  animation:pushdownToOpen 2s ease;
-}
-*/
 .pullup-close {
   -webkit-animation:shrinkToClose 1s linear;
   -moz-animation: shrinkToClose 1s linear;
@@ -142,7 +102,7 @@ html,body {
 @-webkit-keyframes shrinkToClose {
   from {
     width:969px;
-    height:400px;
+    height:560px;
   }
   to {
     width:969px;
@@ -152,7 +112,7 @@ html,body {
 @-moz-keyframes shrinkToClose {
   from {
     width:969px;
-    height:400px;
+    height:560px;
   }
   to {
     width:969px;
@@ -162,7 +122,7 @@ html,body {
 @-o-keyframes shrinkToClose {
   from {
     width:969px;
-    height:400px;
+    height:560px;
   }
   to {
     width:969px;
@@ -172,7 +132,7 @@ html,body {
 @keyframes shrinkToClose {
   from {
     width:969px;
-    height:400px;
+    height:560px;
   }
   to {
     width:969px;
@@ -188,7 +148,7 @@ html,body {
   }
   to {
     width:969px;
-    height:400px;
+    height:560px;
   }
 }
 @-moz-keyframes pushdownToOpen {
@@ -198,7 +158,7 @@ html,body {
   }
   to {
     width:969px;
-    height:400px;
+    height:560px;
   }
 }
 @-o-keyframes pushdownToOpen {
@@ -208,7 +168,7 @@ html,body {
   }
   to {
     width:969px;
-    height:400px;
+    height:560px;
   }
 }
 @keyframes pushdownToOpen {
@@ -218,6 +178,6 @@ html,body {
   }
   to {
     width:969px;
-    height:400px;
+    height:560px;
   }
 }

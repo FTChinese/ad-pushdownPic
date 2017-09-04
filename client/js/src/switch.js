@@ -1,9 +1,9 @@
 import {docCookies} from "./helper.js";
 
 class Switch {
-  constructor(imgObj, videoObj, mode) {
-    this.imgObj = imgObj;
-    this.videoObj = videoObj;
+  constructor(bannerObj, bigObj, mode) {
+    this.bannerObj = bannerObj;
+    this.bigObj = bigObj;
     
     let innerIframeId = "";
     let outerIframeId = "";
@@ -42,7 +42,6 @@ class Switch {
     
     this.autoOpen();
     this.clickToOpen();
-    this.autoClose();
     this.clickToClose();
   }
   injectCssToParents() {
@@ -54,7 +53,7 @@ class Switch {
     const outerIframeWindowHead = window.parent.parent.document.getElementsByTagName("head")[0];
     console.log(outerIframeWindowHead);
     const switchStyle = document.createElement("style");
-    switchStyle.innerHTML = ".pullup-close{-webkit-animation:shrinkToClose 1s linear;-moz-animation:shrinkToClose 1s linear;-o-animation:shrinkToClose 1s linear;animation:shrinkToClose 1s linear}.pushdown-open{-webkit-animation:pushdownToOpen 1s linear;-moz-animation:pushdownToOpen 1s linear;-o-animation:pushdownToOpen 1s linear;animation:pushdownToOpen 1s linear}@-webkit-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-moz-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-o-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-webkit-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@-moz-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@-o-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}";
+    switchStyle.innerHTML = ".pullup-close{-webkit-animation:shrinkToClose 1s linear;-moz-animation:shrinkToClose 1s linear;-o-animation:shrinkToClose 1s linear;animation:shrinkToClose 1s linear}.pushdown-open{-webkit-animation:pushdownToOpen 1s linear;-moz-animation:pushdownToOpen 1s linear;-o-animation:pushdownToOpen 1s linear;animation:pushdownToOpen 1s linear}@-webkit-keyframes shrinkToClose{from{width:969px;height:560px}to{width:969px;height:90px}}@-moz-keyframes shrinkToClose{from{width:969px;height:560px}to{width:969px;height:90px}}@-o-keyframes shrinkToClose{from{width:969px;height:560px}to{width:969px;height:90px}}@keyframes shrinkToClose{from{width:969px;height:560px}to{width:969px;height:90px}}@-webkit-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:560px}}@-moz-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:560px}}@-o-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:560px}}@keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:560px}}";
     const switchStyleCopy = switchStyle.cloneNode(true);
 
     innerIframeWindowHead.appendChild(switchStyle);
@@ -88,15 +87,14 @@ class Switch {
   }
 
   pushDownToOpen() {
-    const videoSection = this.videoObj.root;
-    const videoPostPic = this.videoObj.postPic;
-    const video = this.videoObj.video;
-    const imgSection = this.imgObj.root;
-    videoSection.classList.remove("pullup-close");
-    videoSection.classList.add("pushdown-open");
-    videoSection.style.height ="90px";
-    videoSection.style.display="block";
-    videoPostPic.style.display="block";
+    console.log("pushDown");
+    const bigPicSection = this.bigObj.root;
+    const bannerPicSection = this.bannerObj.root;
+    bigPicSection.classList.remove("pullup-close");
+    bigPicSection.classList.add("pushdown-open");
+    bigPicSection.style.height ="90px";
+    bigPicSection.style.display="block";
+    bigPicSection.style.display="block";
     
     if(this.innerIframe && this.outerIframe) {
       this.innerIframe.style.height ="90px";
@@ -107,30 +105,29 @@ class Switch {
       this.outerIframe.classList.add("pushdown-open");
     }
     
-    imgSection.style.display="none";
+    bannerPicSection.style.display="none";
+    
     setTimeout(() => {
-      videoPostPic.style.display="none";
-      videoSection.classList.remove("pushdown-open");
-      videoSection.style.height="400px";
+     // bigPicSection.style.display="none";
+      bigPicSection.classList.remove("pushdown-open");
+      bigPicSection.style.height="560px";
       
       if(this.innerIframe && this.outerIframe) {
-        this.innerIframe.style.height ="400px";
-        this.outerIframe.style.height ="400px";
+        this.innerIframe.style.height ="560px";
+        this.outerIframe.style.height ="560px";
         this.innerIframe.classList.remove("pushdown-open");
         this.outerIframe.classList.remove("pushdown-open");
       }
       
-      if(video instanceof HTMLElement) {
-        video.play();
-      }
     }, 1000);
+    
   }
   
   pullUpToClose() {
-    this.videoObj.root.classList.add("pullup-close");
+    this.bigObj.root.classList.add("pullup-close");
     if(this.innerIframe && this.outerIframe) {
-      this.innerIframe.style.height ="400px";
-      this.outerIframe.style.height ="400px";
+      this.innerIframe.style.height ="560px";
+      this.outerIframe.style.height ="560px";
       this.innerIframe.classList.remove("pushdown-open");
       this.innerIframe.classList.add("pullup-close");
       this.outerIframe.classList.remove("pushdown-open");
@@ -138,13 +135,10 @@ class Switch {
     }
     
     setTimeout(()=>{
-      this.videoObj.root.style.display="none";
-      this.videoObj.root.classList.remove("pullup-close");
-      this.videoObj.video.currentTime = 0;
-      this.videoObj.play.style.display = "none";
-      this.videoObj.pause.style.display = "block";
+      this.bigObj.root.style.display="none";
+      this.bigObj.root.classList.remove("pullup-close");
     
-      this.imgObj.root.style.display="block";
+      this.bannerObj.root.style.display="block";
 
       if(this.innerIframe && this.outerIframe) {
         this.innerIframe.style.height ="90px";
@@ -164,7 +158,7 @@ class Switch {
     if(!userCookie) {
       window.addEventListener("load", this.pushDownToOpen, false);
 
-      //自动播放后设置cookie
+      //自动下推扩展后设置cookie
       let expiredTime = new Date();
       expiredTime.setTime(expiredTime.getTime()+24*60*60*1000);
       docCookies.setItem("pushdownAd","hasLoaded",expiredTime);
@@ -172,19 +166,15 @@ class Switch {
   }
 
   clickToOpen() {
-    this.imgObj.open.addEventListener("click",this.pushDownToOpen,false);
+    this.bannerObj.open.addEventListener("click",this.pushDownToOpen,false);
   }
 
   clickToClose() {
-    const close = this.videoObj.close;
+    const close = this.bigObj.close;
     
     close.addEventListener("click", this.pullUpToClose, false)
   }
   
-  autoClose() {
-    const video = this.videoObj.video;
-    video.addEventListener("ended", this.pullUpToClose, false)
-  }
 }
 
 export default Switch;

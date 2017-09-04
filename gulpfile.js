@@ -146,7 +146,7 @@ gulp.task('minify', function() {
 gulp.task('deploy', gulp.series('html','style','script','smoosh','minify',()=>{
   //const destDir = '../NEXT/app/m/marketing/testAd';
   const destDir = '../ad-management/complex_pages';
-  fs.rename("deploy/index.html","pushdown.html");
+  fs.rename("deploy/index.html","pushdownPic.html");
   return gulp.src('deploy/*.html')
     .pipe(gulp.dest(destDir));
 }));
