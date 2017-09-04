@@ -9,6 +9,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const del = require('del');
 const rollupUglify = require('rollup-plugin-uglify');
 const minifyEs6 = require('uglify-es').minify;
+const merge = require('merge-stream');
 var cache;
 const env = new nunjucks.Environment(
   new nunjucks.FileSystemLoader(['views'],{
@@ -143,10 +144,13 @@ gulp.task('minify', function() {
 
 
 
-gulp.task('deploy', gulp.series('html','style','script','smoosh','minify',()=>{
-  //const destDir = '../NEXT/app/m/marketing/testAd';
-  const destDir = '../ad-management/complex_pages';
+gulp.task('publish', gulp.series('html','style','script','smoosh','minify',()=>{
+  const managementDir = '../ad-management/complex_pages';
+  const onlineDir = '../dev_www/frontend/tpl/marketing/complex_pages'
   fs.rename("deploy/index.html","pushdownPic.html");
-  return gulp.src('deploy/*.html')
-    .pipe(gulp.dest(destDir));
+  const managementStream = gulp.src('deploy/*.html')
+    .pipe(gulp.dest(managementDir));
+  const onlineStream = gulp.src('deploy/*.html')
+    .pipe(gulp.dest(onlineDir));
+  return merge(managementStream,onlineStream);
 }));
