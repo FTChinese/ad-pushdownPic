@@ -138,11 +138,15 @@ gulp.task('build', gulp.series('del','html','style','script',() => {
 		.pipe(gulp.dest(destDir));
 }));
 
-
+gulp.task('copy:toAd-management', gulp.series('build',() => {
+  const managementDir = '../ad-management/m/marketing';
+  return gulp.src(`dist/${finalName}.html`)
+    .pipe(gulp.dest(managementDir));
+}));
 
 gulp.task('publish', gulp.series('build',()=>{
-  const managementDir = '../ad-management/complex_pages';
-  const onlineDir = '../dev_www/frontend/tpl/marketing/complex_pages'
+  const managementDir = '../ad-management/m/marketing';
+  const onlineDir = '../dev_www/frontend/tpl/marketing'
   const managementStream = gulp.src(`dist/${finalName}.html`)
     .pipe(gulp.dest(managementDir));
   const onlineStream = gulp.src(`dist/${finalName}.html`)

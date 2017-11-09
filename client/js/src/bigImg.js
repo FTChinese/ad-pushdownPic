@@ -39,7 +39,7 @@ class BigImg {
  
   dynamicGetHTMLData() {
     const pWin = window.parent;
-    if(pWin && pWin.detailPage && pWind.bigPic) {
+    if(pWin && pWin.detailPage && pWin.bigPic) {
       this.bigPicA.href = pWin.detailPage;
       this.bigPic.src = pWin.bigPic;
     }
