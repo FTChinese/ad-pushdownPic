@@ -36,4 +36,14 @@ const docCookies = {
   }
 };
 
-export {docCookies};
+function createCssClass(name, rules) {
+  /**
+   * @param name:TYPE String,css类明，如"body"/".class1"/"
+   * @param rules: TYPE String,css类体，不含{},如"color:red;font-size:16px;"
+   */
+  const styleElement = document.createElement('style');
+  styleElement.type = 'text/css';
+  styleElement.innerHTML = `${name}{${rules}}`;
+  document.getElementsByTagName('head')[0].appendChild(styleElement);
+}
+export {docCookies, createCssClass};

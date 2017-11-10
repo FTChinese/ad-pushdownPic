@@ -11,7 +11,7 @@ const rollupUglify = require('rollup-plugin-uglify');
 const minifyEs6 = require('uglify-es').minify;
 const merge = require('merge-stream');
 var cache;
-const finalName = "pushdownPic";
+const finalName = "pushdownPic1";
 
 const env = new nunjucks.Environment(
   new nunjucks.FileSystemLoader(['views'],{

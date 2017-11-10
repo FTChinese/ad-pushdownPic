@@ -27,17 +27,13 @@ class BigImg {
     if(this.root.querySelector("#bigPicA") instanceof HTMLElement) {
       this.bigPicA = this.root.querySelector("#bigPicA");
     }
-
-   
-    if(mode === "prod") {
-      console.log("prod");
-      this.dynamicGetHTMLData();
-    }
+ 
+    this.dynamicSetData();
 
   } 
 
  
-  dynamicGetHTMLData() {
+  dynamicSetData() {
     const pWin = window.parent;
     if(pWin && pWin.detailPage && pWin.bigPic) {
       this.bigPicA.href = pWin.detailPage;

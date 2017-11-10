@@ -24,12 +24,12 @@ class BannerImg {
     if(this.root.querySelector("#bannerA") instanceof HTMLElement) {
       this.a = this.root.querySelector("#bannerA");
     }
-    if(mode === "prod") {
-      this.dynamicGetHTMLData();
-    }
+    
+    this.dynamicSetData();
+    
   }
 
-  dynamicGetHTMLData() {
+  dynamicSetData() {
     if(window.parent && window.parent.detailPage && window.parent.bannerImg && this.img && this.a) {
       this.a.href = window.parent.detailPage;
       this.img.src = window.parent.bannerImg;

@@ -1,10 +1,10 @@
-import {docCookies} from "./helper.js";
+import {docCookies, createCssClass} from "./helper.js";
 
 class Switch {
   constructor(bannerObj, bigObj, mode) {
     this.bannerObj = bannerObj;
     this.bigObj = bigObj;
-    
+   
     let innerIframeId = "";
     let outerIframeId = "";
     if(window.parent && window.parent.parent) {
@@ -34,12 +34,14 @@ class Switch {
         //处理outerIframe的ancestor元素
         this.dealwithAncestors();
       }
+      
     }
-
+    this.bigHeight = "400px";
+    this.dynamicSetBigHeight();
        
     this.pushDownToOpen = this.pushDownToOpen.bind(this);
     this.pullUpToClose = this.pullUpToClose.bind(this);
-    
+    this.dynamicChangeCssClass(this.bigHeight);
     this.autoOpen();
     this.clickToOpen();
     this.clickToClose();
@@ -53,7 +55,7 @@ class Switch {
     const outerIframeWindowHead = window.parent.parent.document.getElementsByTagName("head")[0];
     console.log(outerIframeWindowHead);
     const switchStyle = document.createElement("style");
-    switchStyle.innerHTML = ".pullup-close{-webkit-animation:shrinkToClose 1s linear;-moz-animation:shrinkToClose 1s linear;-o-animation:shrinkToClose 1s linear;animation:shrinkToClose 1s linear}.pushdown-open{-webkit-animation:pushdownToOpen 1s linear;-moz-animation:pushdownToOpen 1s linear;-o-animation:pushdownToOpen 1s linear;animation:pushdownToOpen 1s linear}@-webkit-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-moz-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-o-keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@keyframes shrinkToClose{from{width:969px;height:400px}to{width:969px;height:90px}}@-webkit-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@-moz-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@-o-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}@keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:400px}}";
+    switchStyle.innerHTML = ".pullup-close{-webkit-animation:shrinkToClose 1s linear;-moz-animation:shrinkToClose 1s linear;-o-animation:shrinkToClose 1s linear;animation:shrinkToClose 1s linear}.pushdown-open{-webkit-animation:pushdownToOpen 1s linear;-moz-animation:pushdownToOpen 1s linear;-o-animation:pushdownToOpen 1s linear;animation:pushdownToOpen 1s linear}@-webkit-keyframes shrinkToClose{from{width:969px;height:auto}to{width:969px;height:90px}}@-moz-keyframes shrinkToClose{from{width:969px;height:auto}to{width:969px;height:90px}}@-o-keyframes shrinkToClose{from{width:969px;height:auto}to{width:969px;height:90px}}@keyframes shrinkToClose{from{width:969px;height:auto}to{width:969px;height:90px}}@-webkit-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:auto}}@-moz-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:auto}}@-o-keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:auto}}@keyframes pushdownToOpen{from{width:969px;height:90px}to{width:969px;height:auto}}";
     const switchStyleCopy = switchStyle.cloneNode(true);
 
     innerIframeWindowHead.appendChild(switchStyle);
@@ -61,7 +63,22 @@ class Switch {
     console.log(innerIframeWindowHead);
     console.log(outerIframeWindowHead);
   }
-
+  dynamicChangeCssClass(bigHeight) {
+    createCssClass(`@-webkit-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
+    createCssClass(`@-moz-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
+    createCssClass(`@-o-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
+    createCssClass(`@keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
+    createCssClass(`@-webkit-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
+    createCssClass(`@-moz-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
+    createCssClass(`@-o-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
+    createCssClass(`@keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
+  }
+  dynamicSetBigHeight(){
+    const pWin = window.parent;
+    if(pWin && pWin.bigHeight) {
+      this.bigHeight = pWin.bigHeight + "px";
+    } 
+  }
   dealwithAncestors() {
     if(!(this.outerIframeId && this.outerIframe && this.outerIframe.parentNode )) {
       return;
@@ -110,11 +127,11 @@ class Switch {
     setTimeout(() => {
      // bigPicSection.style.display="none";
       bigPicSection.classList.remove("pushdown-open");
-      bigPicSection.style.height="400px";
+      bigPicSection.style.height= this.bigHeight;
       
       if(this.innerIframe && this.outerIframe) {
-        this.innerIframe.style.height ="400px";
-        this.outerIframe.style.height ="400px";
+        this.innerIframe.style.height = this.bigHeight;
+        this.outerIframe.style.height = this.bigHeight;
         this.innerIframe.classList.remove("pushdown-open");
         this.outerIframe.classList.remove("pushdown-open");
       }
@@ -126,8 +143,8 @@ class Switch {
   pullUpToClose() {
     this.bigObj.root.classList.add("pullup-close");
     if(this.innerIframe && this.outerIframe) {
-      this.innerIframe.style.height ="400px";
-      this.outerIframe.style.height ="400px";
+      this.innerIframe.style.height = this.bigHeight;
+      this.outerIframe.style.height = this.bigHeight;
       this.innerIframe.classList.remove("pushdown-open");
       this.innerIframe.classList.add("pullup-close");
       this.outerIframe.classList.remove("pushdown-open");
