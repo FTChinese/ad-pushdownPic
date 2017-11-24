@@ -36,12 +36,9 @@ class Switch {
       }
       
     }
-    this.bigHeight = "400px";
-    this.dynamicSetBigHeight();
        
     this.pushDownToOpen = this.pushDownToOpen.bind(this);
     this.pullUpToClose = this.pullUpToClose.bind(this);
-    this.dynamicChangeCssClass(this.bigHeight);
     this.autoOpen();
     this.clickToOpen();
     this.clickToClose();
@@ -63,22 +60,8 @@ class Switch {
     console.log(innerIframeWindowHead);
     console.log(outerIframeWindowHead);
   }
-  dynamicChangeCssClass(bigHeight) {
-    createCssClass(`@-webkit-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
-    createCssClass(`@-moz-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
-    createCssClass(`@-o-keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
-    createCssClass(`@keyframes shrinkToClose`, `from {width:969px;height:${bigHeight};}to {width:969px;height:90px;}`);
-    createCssClass(`@-webkit-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
-    createCssClass(`@-moz-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
-    createCssClass(`@-o-keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
-    createCssClass(`@keyframes pushdownToOpen`, `from {width:969px; height:90px;} to {width:969px;height:${bigHeight};}`);
-  }
-  dynamicSetBigHeight(){
-    const pWin = window.parent;
-    if(pWin && pWin.bigHeight) {
-      this.bigHeight = pWin.bigHeight + "px";
-    } 
-  }
+
+ 
   dealwithAncestors() {
     if(!(this.outerIframeId && this.outerIframe && this.outerIframe.parentNode )) {
       return;
@@ -127,11 +110,11 @@ class Switch {
     setTimeout(() => {
      // bigPicSection.style.display="none";
       bigPicSection.classList.remove("pushdown-open");
-      bigPicSection.style.height= this.bigHeight;
+      bigPicSection.style.height= "400px";
       
       if(this.innerIframe && this.outerIframe) {
-        this.innerIframe.style.height = this.bigHeight;
-        this.outerIframe.style.height = this.bigHeight;
+        this.innerIframe.style.height = "400px";
+        this.outerIframe.style.height = "400px";
         this.innerIframe.classList.remove("pushdown-open");
         this.outerIframe.classList.remove("pushdown-open");
       }
@@ -143,8 +126,8 @@ class Switch {
   pullUpToClose() {
     this.bigObj.root.classList.add("pullup-close");
     if(this.innerIframe && this.outerIframe) {
-      this.innerIframe.style.height = this.bigHeight;
-      this.outerIframe.style.height = this.bigHeight;
+      this.innerIframe.style.height = "400px";
+      this.outerIframe.style.height = "400px";
       this.innerIframe.classList.remove("pushdown-open");
       this.innerIframe.classList.add("pullup-close");
       this.outerIframe.classList.remove("pushdown-open");
